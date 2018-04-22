@@ -2,7 +2,6 @@
 <!-- xmd5a (xmd5a@yandex.ru) http://forum.openstreetmap.org/viewtopic.php?id=23125 -->
 <renderingStyle name="LightRS" depends="" defaultColor="#ffffff" version="1">
 	<renderingProperty attr="moreDetailed" name="More details" description="More details on map" type="boolean" possibleValues="" category="details"/>
-	<renderingProperty attr="contourLines" name="Show contour lines" description="Select minimum zoom level to display in map if available. Separate contour file may be needed." type="string" possibleValues="16,15,14,13,12,11" defaultValueDescription="default" category="details"/>
 	<renderingProperty attr="noPolygons" name="Hide polygons (exc.buildings)" description="Make all areal land features on map transparent" type="boolean" possibleValues="" category="hide"/>
 	<renderingProperty attr="hideWoodScrubs" name="Hide wood and scrubs" description="Hide wood and scrubs" type="boolean" possibleValues="" category="hide"/>
 	<renderingProperty attr="hideBuildings" name="Hide buildings" description="Hide buildings" type="boolean" possibleValues="" category="hide"/>
@@ -217,13 +216,7 @@
 	<renderingConstant name="railwayNightColor2" value="#888888"/>
 	<renderingConstant name="tramDayColor" value="#444444"/>
 	<renderingConstant name="tramNightColor" value="#999999"/>
-	<renderingConstant name="contourDayColorNon100m" value="#304f4f4f"/>
-	<renderingConstant name="contourDayColor100m" value="#404f4f4f"/>
-	<renderingConstant name="contourNightColorNon100m" value="#208f8f8f"/>
-	<renderingConstant name="contourNightColor100m" value="#308f8f8f"/>
-
 	<renderingConstant name="buildingTextHaloColorDay" value="#aaffffff"/>
-
 	<renderingConstant name="buildingColorDay" value="#bbbbbb"/>
 	<renderingConstant name="buildingColorNight" value="#3f3c40"/>
 	<renderingConstant name="waterColorDay" value="#8fdaff"/>
@@ -1187,30 +1180,6 @@
 				</apply>
 			</switch>
 
-			<switch tag="contour" value="" textOnPath="true" textOrder="255" textHaloRadius="1">
-				<case minzoom="13" contourLines="11"/>
-				<case minzoom="13" contourLines="12"/>
-				<case minzoom="13" contourLines="13"/>
-				<case minzoom="14" contourLines=""/>
-				<case minzoom="14" contourLines="14"/>
-				<case minzoom="15" contourLines="15"/>
-				<case minzoom="16" contourLines="16"/>
-				<apply>
-					<case minzoom="15" additional="contourtype=50m" textColor="#777777" textSize="10" textMinDistance="600">
-						<apply_if nightMode="true" textColor="#aaaaaa" textHaloColor="#66777777"/>
-					</case>
-					<case minzoom="16" additional="contourtype=20m" textColor="#777777" textSize="10" textMinDistance="700">
-						<apply_if nightMode="true" textColor="#999999" textHaloColor="#55777777"/>
-					</case>
-					<case minzoom="17" additional="contourtype=10m" textColor="#888888" textSize="9" textMinDistance="800">
-						<apply_if nightMode="true" textColor="#888888" textHaloColor="#33777777"/>
-					</case>
-					<case additional="contourtype=100m" textColor="#444444" textSize="12" textMinDistance="240">
-						<apply_if nightMode="true" textColor="#bbbbbb" textHaloColor="#77777777"/>
-					</case>
-				</apply>
-			</switch>
-
 			<switch textColor="#6666ff" textDy="3" textWrapWidth="25" nameTag="" textHaloRadius="$textHaloRadiusDay">
 				<case minzoom="15" tag="railway" value="station" textBold="true" textOrder="70">
 					<apply_if maxzoom="14" textSize="12"/>
@@ -1226,8 +1195,6 @@
 				<case minzoom="16" tag="railway" value="tram_stop" textSize="12" textOrder="74"/>
 				<case minzoom="16" tag="highway" value="bus_stop" textSize="13" textBold="true" textOrder="73"/>
 				<case minzoom="16" tag="public_transport" value="platform" textSize="13" textBold="true" textOrder="71"/>
-<!--				<case minzoom="14" maxzoom="14" tag="railway" value="platform" textSize="12" textBold="true"/>
-				<case minzoom="15" tag="railway" value="platform" textSize="13" textBold="true"/>-->
 				<case minzoom="15" tag="aerialway" value="station" textSize="13" textOrder="101"/>
 				<apply_if nightMode="true" textColor="#d4d4ff" textHaloColor="#aa2f4371" textHaloRadius="$textHaloRadiusNight"/>
 			</switch>
@@ -2002,30 +1969,6 @@
 		<case minzoom="5" tag="natural" value="coastline_line" color="#cc999999" strokeWidth=":1">
 			<apply_if nightMode="true" color="#cc375E86"/>
 		</case>
-
-		<switch tag="contour" value="elevation" color="$contourDayColorNon100m">
-			<case minzoom="11" contourLines="11" strokeWidth="0.7"/>
-			<case minzoom="12" contourLines="12" strokeWidth="0.7"/>
-			<case minzoom="13" contourLines="13" strokeWidth="1"/>
-			<case minzoom="14" contourLines="" strokeWidth="1"/>
-			<case minzoom="14" contourLines="14" strokeWidth="1"/>
-			<case minzoom="15" contourLines="15" strokeWidth="1"/>
-			<case minzoom="16" contourLines="16" strokeWidth="1"/>
-			<apply>
-				<case additional="contourtype=10m" color="$contourDayColorNon100m">
-					<apply_if nightMode="true" color="$contourNightColorNon100m" strokeWidth="1"/>
-				</case>
-				<case additional="contourtype=20m" color="$contourDayColorNon100m">
-					<apply_if nightMode="true" color="$contourNightColorNon100m" strokeWidth="1"/>
-				</case>
-				<case additional="contourtype=50m" color="$contourDayColorNon100m">
-					<apply_if nightMode="true" color="$contourNightColorNon100m" strokeWidth="1.3"/>
-				</case>
-				<case additional="contourtype=100m" color="$contourDayColor100m">
-					<apply_if nightMode="true" color="$contourNightColor100m" strokeWidth="1.6"/>
-				</case>
-			</apply>
-		</switch>
 
 		<switch>
 			<switch minzoom="6" maxzoom="15">

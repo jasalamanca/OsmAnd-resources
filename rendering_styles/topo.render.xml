@@ -5,8 +5,6 @@
 		type="string" possibleValues="browse map,car,bicycle,pedestrian"/>
 	<renderingProperty attr="transportStops" name="Transport stops" description="Public transport stops"
 		type="boolean" possibleValues="" category="transport"/>
-	<renderingProperty attr="contourLines" name="Show contour lines" description="Select minimum zoom level to display in map if available. Separate contour file may be needed."
-		type="string" possibleValues="disabled,16,15,14,13,12,11" defaultValueDescription="default13" category="details"/>
 	<renderingProperty attr="horseRoutes" name="Horse routes" description="Horse routes"
 		type="boolean" possibleValues="" category="routes"/>
 	<renderingProperty attr="hikingRoutesOSMC" name="Hiking symbol overlay" description="Render symbols of OSMC hiking traces"
@@ -38,9 +36,6 @@
 		type="string" possibleValues="red,orange,lightblue,blue,purple,translucent_red,translucent_orange,translucent_lightblue,translucent_blue,translucent_purple" defaultValueDescription="default"/>
 	<renderingProperty attr="currentTrackWidth" name="Current GPX width" description="Width of the currently recording track"
 		type="string" possibleValues="thin,medium,bold" defaultValueDescription="default"/>
-	<renderingProperty attr="contourColorScheme" name="Contour lines color scheme" description="Contour lines color scheme" type="string" possibleValues="light_brown,brown,dark_brown" defaultValueDescription="default"/>
-	<renderingProperty attr="contourWidth" name="Contour lines width" description="Contour lines width" type="string" possibleValues="thin,medium" defaultValueDescription="default"/>
-	<renderingProperty attr="contourDensity" name="Contour lines density" description="Contour lines density" type="string" possibleValues="low,medium_w,high" defaultValueDescription="default"/>
 
 	<renderingProperty attr="engine_v1" type="boolean"/>
 	<renderingAttribute name="defaultColor">
@@ -438,49 +433,6 @@
 	</renderingAttribute>
 	<renderingAttribute name="forestColor">
 		<case attrColorValue="#9dd57c"/>
-	</renderingAttribute>
-
-	<renderingAttribute name="contourLineColor">
-		<case contourColorScheme="light_brown" attrColorValue="#119C5615">
-			<apply_if noPolygons="true" attrColorValue="#44FFEAD6"/>
-		</case>
-		<case contourColorScheme="brown" attrColorValue="#44bd6819">
-			<apply_if noPolygons="true" attrColorValue="#44C39F7D"/>
-		</case>
-		<case contourColorScheme="dark_brown" attrColorValue="#22522D0B">
-			<apply_if noPolygons="true" attrColorValue="#4437250B"/>
-		</case>
-		<case attrColorValue="#44bd6819">
-			<apply_if noPolygons="true" attrColorValue="#44FFEAD6"/>
-		</case>
-	</renderingAttribute>
-	<renderingAttribute name="contourLineColor50m">
-		<case contourColorScheme="light_brown" attrColorValue="#339C5615">
-			<apply_if noPolygons="true" attrColorValue="#88FFEAD6"/>
-		</case>
-		<case contourColorScheme="brown" attrColorValue="#889C5615">
-			<apply_if noPolygons="true" attrColorValue="#88C39F7D"/>
-		</case>
-		<case contourColorScheme="dark_brown" attrColorValue="#55522D0B">
-			<apply_if noPolygons="true" attrColorValue="#8837250B"/>
-		</case>
-		<case attrColorValue="#889C5615">
-			<apply_if noPolygons="true" attrColorValue="#88FFEAD6"/>
-		</case>
-	</renderingAttribute>
-	<renderingAttribute name="contourLineColor100m">
-		<case contourColorScheme="light_brown" attrColorValue="#559C5615">
-			<apply_if noPolygons="true" attrColorValue="#AAFFEAD6"/>
-		</case>
-		<case contourColorScheme="brown" attrColorValue="#aa9C5615">
-			<apply_if noPolygons="true" attrColorValue="#AAC39F7D"/>
-		</case>
-		<case contourColorScheme="dark_brown" attrColorValue="#66522D0B">
-			<apply_if noPolygons="true" attrColorValue="#aa37250B"/>
-		</case>
-		<case attrColorValue="#aa9C5615">
-			<apply_if noPolygons="true" attrColorValue="#AAFFEAD6"/>
-		</case>
 	</renderingAttribute>
 
 	<renderingAttribute name="buildingColor">
@@ -1140,12 +1092,6 @@
 				<case tag="aeroway" value="" order="32"/>
 				<case tag="railway" value="station"/>
 				<case tag="boundary" value="" order="62"/>
-				<case tag="contour" value="elevation" order="11">
-					<apply_if contourDensity="medium_w" additional="contourtype=10m" order="-1"/>
-					<apply_if contourDensity="medium_w" additional="contourtype=50m" order="-1"/>
-					<apply_if contourDensity="low" additional="contourtype=10m" order="-1"/>
-					<apply_if contourDensity="low" additional="contourtype=20m" order="-1"/>
-				</case>
 				<case tag="lit" value="" order="12"/>
 				<switch hikingRoutesOSMC="walkingRoutesScopeOSMC" order="99">
 					<case tag="route_hiking" value=""/>
@@ -1986,22 +1932,6 @@
 				</switch>
 				<apply textHaloColor="#ddffffff"/>
 			</switch>
-		</switch>
-
-		<switch tag="contour" value="elevation" textOnPath="false" textBold="true" textOrder="255" textHaloColor="#bbffffff" textHaloRadius="1" intersectionMargin="20">
-			<case minzoom="13" contourLines="11"/>
-			<case minzoom="13" contourLines="12"/>
-			<case minzoom="13" contourLines="13"/>
-			<case minzoom="13" contourLines=""/>
-			<case minzoom="14" contourLines="14"/>
-			<case minzoom="15" contourLines="15"/>
-			<case minzoom="16" contourLines="16"/>
-			<apply>
-				<case minzoom="15" additional="contourtype=50m" textColor="#666666" textSize="12" textMinDistance="500"/>
-				<case minzoom="15" additional="contourtype=20m" textColor="#666666" textSize="12" textMinDistance="600"/>
-				<case minzoom="17" additional="contourtype=10m" textColor="#777777" textSize="11" textMinDistance="700"/>
-				<case additional="contourtype=100m" textColor="#444444" textSize="13" textMinDistance="200"/>
-			</apply>
 		</switch>
 
 		<switch>
@@ -4388,44 +4318,6 @@
 			</apply_if>
 		</case>
 
-		<switch tag="contour" value="elevation">
-			<case minzoom="11" contourLines="11"/>
-			<case minzoom="12" contourLines="12"/>
-			<case minzoom="13" contourLines="13"/>
-			<case minzoom="13" contourLines=""/>
-			<case minzoom="14" contourLines="14"/>
-			<case minzoom="15" contourLines="15"/>
-			<case minzoom="16" contourLines="16"/>
-			<apply>
-				<switch>
-					<case minzoom="13" additional="contourtype=10m" color="$contourLineColor"/>
-					<case minzoom="12" additional="contourtype=20m" color="$contourLineColor"/>
-					<apply>
-						<case contourWidth="thin" strokeWidth="0.5"/>
-						<case contourWidth="medium" strokeWidth="1"/>
-						<case strokeWidth="0.5"/>
-					</apply>
-				</switch>
-				<switch minzoom="11">
-					<case additional="contourtype=50m" color="$contourLineColor50m"/>
-					<apply>
-						<case contourWidth="thin" strokeWidth="0.6"/>
-						<case contourWidth="medium" strokeWidth="0.9"/>
-						<case strokeWidth="0.6"/>
-					</apply>
-				</switch>
-				<switch minzoom="11">
-					<case additional="contourtype=100m" color="$contourLineColor100m"/>
-					<apply>
-						<case contourWidth="thin" strokeWidth="1"/>
-						<case contourWidth="medium" strokeWidth="1.3"/>
-						<case strokeWidth="1"/>
-					</apply>
-				</switch>
-			</apply>
-			<apply_if minzoom="15" pathIcon="stroke_lightorange_left" pathIconStep="100"/>
-		</switch>
-
 		<switch engine_v1="false" strokeWidth="0.5">
 			 <case minzoom="14" tag="natural" value="cliff" color="#148c14" pathIcon="stroke_darkgreen" pathIconStep="10"/>
 			 <case minzoom="16" tag="natural" value="slope" color="#44bd6819" pathIcon="stroke_brown_right" pathIconStep="10">
@@ -4446,7 +4338,6 @@
 
 		<switch strokeWidth="1">
 			<case minzoom="14" tag="natural" value="cliff" color="#148c14" color_2="#005300"/>
-			<case minzoom="16" tag="natural" value="slope" color="$contourLineColor" color_2="$contourLineColor"/>
 			<case minzoom="16" tag="natural" value="earth_bank" color="#88949494" color_2="#949494"/>
 			<apply maxzoom="16" strokeWidth_2="2.5:2.5" pathEffect_2="1_7"/>
 			<apply minzoom="17" maxzoom="17" strokeWidth_2="4:4" pathEffect_2="1_9"/>

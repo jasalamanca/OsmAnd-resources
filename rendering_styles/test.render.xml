@@ -23,8 +23,6 @@
 		type="boolean" possibleValues="" category="details"/>
 	<renderingProperty attr="showAccess" name="Show access restrictions" description="Show access restrictions"
 		type="boolean" possibleValues="" category="details"/>
-	<renderingProperty attr="contourLines" name="Show contour lines" description="Select minimum zoom level to display in map if available. Separate contour file may be needed."
-		type="string" possibleValues="disabled,16,15,14,13,12,11" defaultValueDescription="default13" category="details"/>
 	<renderingProperty attr="coloredBuildings" name="Colored buildings" description="Buildings colored by type"
 		type="boolean" possibleValues="" category="details"/>
 	<renderingProperty attr="streetLighting" name="Street lighting" description="Show street lighting"
@@ -614,15 +612,6 @@
 		<case attrColorValue="#339900">
 			<apply_if nightMode="true" attrColorValue="#339900"/>
 		</case>
-	</renderingAttribute>
-
-	<renderingAttribute name="contourLineColor">
-		<case engine_v1="false" attrColorValue="#15ff7c00"/>
-		<case attrColorValue="#2aff7c00"/>
-	</renderingAttribute>
-	<renderingAttribute name="contourLineColor50m">
-		<case engine_v1="false" attrColorValue="#15ea7300"/>
-		<case attrColorValue="#2aea7300"/>
 	</renderingAttribute>
 
 	<renderingConstant name="cycleRoutelcnColor" value="#500000ff"/>
@@ -2711,29 +2700,6 @@
 			</switch>
 
 			<!-- Natural -->
-			<switch tag="contour" value="" textOnPath="true" textOrder="255">
-				<case minzoom="13" contourLines="11"/>
-				<case minzoom="13" contourLines="12"/>
-				<case minzoom="13" contourLines="13"/>
-				<case minzoom="13" contourLines=""/>
-				<case minzoom="14" contourLines="14"/>
-				<case minzoom="15" contourLines="15"/>
-				<case minzoom="16" contourLines="16"/>
-				<apply>
-					<case minzoom="15" additional="contourtype=50m" textColor="#777777" textSize="10" textMinDistance="600">
-						<apply_if nightMode="true" textColor="#aaaaaa" textHaloRadius=":1" textHaloColor="#66777777"/>
-					</case>
-					<case minzoom="16" additional="contourtype=20m" textColor="#777777" textSize="10" textMinDistance="700">
-						<apply_if nightMode="true" textColor="#999999" textHaloRadius=":1" textHaloColor="#55777777"/>
-					</case>
-					<case minzoom="17" additional="contourtype=10m" textColor="#888888" textSize="9" textMinDistance="800">
-						<apply_if nightMode="true" textColor="#888888" textHaloRadius=":1" textHaloColor="#33777777"/>
-					</case>
-					<case additional="contourtype=100m" textColor="#444444" textSize="12" textMinDistance="240">
-						<apply_if nightMode="true" textColor="#bbbbbb" textHaloRadius=":1" textHaloColor="#77777777"/>
-					</case>
-				</apply>
-			</switch>
 			<case minzoom="15" tag="leisure" value="park" textSize="12" textWrapWidth="15" textHaloRadius="$textHaloRadiusDay" textHaloColor="#aaffffff" textColor="$parkTextColorDay" textItalic="true" textOrder="103">
 				<apply_if nightMode="true" textColor="#9fe39f" textHaloRadius="$textHaloRadiusNight" textHaloColor="#88444444"/>
 			</case>
@@ -6598,23 +6564,6 @@
 				<apply_if additional="oneway=-1" pathIcon="oneway_blue_reverse" pathIconStep="70"/>
 			</apply_if>
 		</case>
-
-		<switch tag="contour" value="elevation">
-			<case minzoom="11" contourLines="11"/>
-			<case minzoom="12" contourLines="12"/>
-			<case minzoom="13" contourLines="13"/>
-			<case minzoom="13" contourLines=""/>
-			<case minzoom="14" contourLines="14"/>
-			<case minzoom="15" contourLines="15"/>
-			<case minzoom="16" contourLines="16"/>
-			<apply>
-				<case additional="contourtype=10m" color="$contourLineColor" strokeWidth="1"/>
-				<case additional="contourtype=20m" color="$contourLineColor" strokeWidth="1"/>
-				<case additional="contourtype=50m" minzoom="16" color="$contourLineColor50m" strokeWidth="1.5"/>
-				<case additional="contourtype=100m" color="$contourLineColor50m" strokeWidth="2"/>
-			</apply>
-			<apply_if minzoom="15" pathIcon="stroke_lightorange_left" pathIconStep="100"/>
-		</switch>
 
 		<!-- Barriers -->
 		<switch minzoom="15">
